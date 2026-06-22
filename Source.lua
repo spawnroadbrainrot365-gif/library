@@ -52,7 +52,7 @@ Themes = {
 	Save = {
     UISize = {550, 380},
     TabSize = 160,
-    Theme = "Dark"   -- بدل "Darker"
+    Theme = "Dark"
  },
 	Settings = {},
 	Connection = {},
@@ -1462,7 +1462,7 @@ local WindowBackground = Create("ImageLabel", MainFrame, {
     Size = UDim2.new(1, 0, 1, 0),
     Position = UDim2.new(0, 0, 0, 0),
     BackgroundTransparency = 1,
-    Image = "rbxthumb://type=Asset&id=78038909872870&w=420&h=420", 
+    Image = "rbxassetid://125628634363144", 
     ImageTransparency = 0,
     ScaleType = Enum.ScaleType.Crop,
     ZIndex = 0
