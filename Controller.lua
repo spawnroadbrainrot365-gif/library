@@ -4,10 +4,14 @@ local v3 = game:GetService("TweenService")
 
 local v4 = v1.LocalPlayer
 local v5 = v4.PlayerGui:WaitForChild("ReadyButton"):WaitForChild("Ready")
-local v6 = v2:WaitForChild("Re/ReadyServic/Ready")
+local v6 = v2:WaitForChild("Re/ReadyService/Ready")
 
 local v7
 local v8 = false
+
+v5.AnchorPoint = Vector2.new(0.5, 0.5)
+v5.Position = UDim2.new(0.5, 0, 0.5, 0)
+v5.Size = UDim2.new(0.2, 0, 0.08, 0)
 
 v5.Visible = false
 v5.BackgroundTransparency = 1
@@ -48,7 +52,7 @@ local function v10()
 
 	v7:Play()
 
-	v7.Completed:Connect(function()
+	v7.Completed:Once(function()
 		if not v8 then
 			v5.Visible = false
 		end
@@ -57,9 +61,7 @@ end
 
 v6.OnClientEvent:Connect(function(v11)
 	if v11 then
-		if not v5.Visible then
-			v9()
-		end
+		v9()
 	else
 		v10()
 	end
