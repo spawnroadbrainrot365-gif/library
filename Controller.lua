@@ -1,86 +1,66 @@
 local v1 = game:GetService("Players")
-local v2 = workspace:WaitForChild("PartsPlayer")
-local v3 = v1.LocalPlayer
-local v4 = v3.PlayerGui:WaitForChild("Ready"):WaitForChild("Ready")
+local v2 = game:GetService("ReplicatedStorage")
+local v3 = game:GetService("TweenService")
 
-v4.Visible = false
-v4.BackgroundTransparency = 1
+local v4 = v1.LocalPlayer
+local v5 = v4.PlayerGui:WaitForChild("ReadyButton"):WaitForChild("Ready")
+local v6 = v2:WaitForChild("Re/ReadyServic/Ready")
 
-local v5
-local v6
+local v7
+local v8 = false
 
-local function v7()
-if v6 then
-v6:Cancel()
+v5.Visible = false
+v5.BackgroundTransparency = 1
+
+local function v9()
+	if v7 then
+		v7:Cancel()
+	end
+
+	v5.Visible = true
+	v8 = true
+
+	v7 = v3:Create(
+		v5,
+		TweenInfo.new(0.5),
+		{BackgroundTransparency = 0}
+	)
+
+	v7:Play()
 end
 
-v4.Visible = true  
+local function v10()
+	if not v5.Visible then
+		return
+	end
 
-v6 = game:GetService("TweenService"):Create(  
-	v4,  
-	TweenInfo.new(0.5),  
-	{BackgroundTransparency = 0}  
-)  
+	if v7 then
+		v7:Cancel()
+	end
 
-v6:Play()
+	v8 = false
 
+	v7 = v3:Create(
+		v5,
+		TweenInfo.new(0.5),
+		{BackgroundTransparency = 1}
+	)
+
+	v7:Play()
+
+	v7.Completed:Connect(function()
+		if not v8 then
+			v5.Visible = false
+		end
+	end)
 end
 
-local function v8()
-if not v4.Visible then
-return
-end
-
-if v6 then  
-	v6:Cancel()  
-end  
-
-v6 = game:GetService("TweenService"):Create(  
-	v4,  
-	TweenInfo.new(0.5),  
-	{BackgroundTransparency = 1}  
-)  
-
-v6:Play()  
-
-v6.Completed:Connect(function()  
-	if v4.BackgroundTransparency == 1 then  
-		v4.Visible = false  
-	end  
+v6.OnClientEvent:Connect(function(v11)
+	if v11 then
+		if not v5.Visible then
+			v9()
+		end
+	else
+		v10()
+	end
 end)
-
-end
-
-for _, v9 in ipairs(v2:GetDescendants()) do
-if v9:IsA("BasePart") then
-v9.Touched:Connect(function(v10)
-if v10.Parent ~= v3.Character then
-return
-end
-
-if v9:GetAttribute("UserIdPlayer") ~= v3.UserId then  
-			return  
-		end  
-
-		v5 = v9  
-
-		if not v4.Visible then  
-			v7()  
-		end  
-	end)  
-
-	v9.TouchEnded:Connect(function(v10)  
-		if v10.Parent ~= v3.Character then  
-			return  
-		end  
-
-		if v5 ~= v9 then  
-			return  
-		end  
-
-		v5 = nil  
-		v8()  
-	end)  
-end
-
-end
